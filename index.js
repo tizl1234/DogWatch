@@ -1,4 +1,4 @@
-// const cv = require("opencv4nodejs")
+const PORT = process.env.PORT || 3000;
 const express = require("express");
 const path = require("path")
 const app = express();
@@ -20,4 +20,4 @@ app.get('/', (req, res) => {
 //     io.emit("image", image);
 // }, 1000 / FPS)
 
-server.listen(3000);
+server.listen(PORT);
