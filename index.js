@@ -1,6 +1,7 @@
 const PORT = process.env.PORT || 3000;
 const express = require("express");
-const path = require("path")
+const path = require("path");
+const { isObject } = require("util");
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -17,7 +18,7 @@ io.on('connection', socket => {
 
     socket.on("vid", (image) => {
         // добавить функцию по обработке изображения
-        socket.emit("image", image);
+        io.emit("image", image);
     });
 });
 
