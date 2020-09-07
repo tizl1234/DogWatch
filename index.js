@@ -3,21 +3,22 @@ const express = require("express");
 const path = require("path")
 const app = express();
 const server = require('http').Server(app);
-// const io = require('socket.io')(server);
+const io = require('socket.io')(server);
 // const FPS = 10;
 // const wCap = new cv.VideoCapture(0);
 
 // wCap.set(cv.CAP_PROP_FRAME_HEIGTH, 400);
 // wCap.set(cv.CAP_PROP_FRAME_WIDTH, 400);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+app.use(express.static(path.join(__dirname + '/public')));
+
+io.on('connection', socket => {
+    console.log('Some client connected')
 });
 
-// setInterval(() => {
-//     const frame = wCap.read();
-//     const image = cv.imencode(".jpg", frame).toString("base64");
-//     io.emit("image", image);
-// }, 1000 / FPS)
+io.on("image", (image) => {
+    // добавить функцию по обработке изображения
+    io.emit("vid", image);
+});
 
 server.listen(PORT);
