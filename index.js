@@ -15,10 +15,10 @@ app.use(express.static(path.join(__dirname + '/public')));
 io.on('connection', socket => {
     console.log('Some client connected');
 
-    socket.on("vid", (image) => {
+    socket.on("vid", (data) => {
         // добавить функцию по обработке изображения
-        console.log("test", image)
-        socket.emit("image", image);
+        console.log("test", data)
+        // socket.emit("image", image);
     });
 });
 
