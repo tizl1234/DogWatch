@@ -13,13 +13,13 @@ const io = require('socket.io')(server);
 app.use(express.static(path.join(__dirname + '/public')));
 
 io.on('connection', socket => {
-    console.log('Some client connected')
-});
+    console.log('Some client connected');
 
-io.on("vid", (image) => {
-    // добавить функцию по обработке изображения
-    console.log("test", image)
-    io.emit("image", image);
+    socket.on("vid", (image) => {
+        // добавить функцию по обработке изображения
+        console.log("test", image)
+        socket.emit("image", image);
+    });
 });
 
 server.listen(PORT);
