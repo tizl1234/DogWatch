@@ -17,7 +17,7 @@ io.on('connection', socket => {
 
     socket.on("vid", (data) => {
         // добавить функцию по обработке изображения
-        console.log("test", data)
+        console.log("image", data);
         // socket.emit("image", image);
     });
 });
