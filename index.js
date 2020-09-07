@@ -16,9 +16,9 @@ io.on('connection', socket => {
     console.log('Some client connected')
 });
 
-io.on("image", (image) => {
+io.on("vid", (image) => {
     // добавить функцию по обработке изображения
-    io.emit("vid", image);
+    io.emit("image", image);
 });
 
 server.listen(PORT);
