@@ -1,7 +1,9 @@
-const socket = io.connect(window.location.hostname);
+$(function() {
+    const socket = io("https://watchthedog.herokuapp.com/");
 
-socket.on('image', (image) => {
-    const imageElem = document.getElementById('image');
-    imageElem.src = `data:image/jpeg;base64,${image}`;
-    console.log(imageElem.src);
+    socket.on('image', (image) => {
+        const imageElem = document.getElementById('image');
+        imageElem.src = `data:image/jpeg;base64,${image}`;
+        console.log(imageElem.src);
+    });
 });
