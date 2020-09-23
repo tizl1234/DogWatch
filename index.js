@@ -1,18 +1,31 @@
 const PORT = process.env.PORT || 3000;
 const express = require("express");
 const path = require("path");
-const { isObject } = require("util");
+const bodyParser = require("body-parser");
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-// const FPS = 10;
-// const wCap = new cv.VideoCapture(0);
 
-// wCap.set(cv.CAP_PROP_FRAME_HEIGTH, 400);
-// wCap.set(cv.CAP_PROP_FRAME_WIDTH, 400);
+app.use(bodyParser.json());
+require('./app/router/router.js')(app);
+
+const db = require('./app/config/db.config.js');
+const Role = db.role;
+
+db.authenticate()
+  .then(() => console.log('Database connected...'))
+  .catch(err => console.log('Error: ' + err))
+
+db.sequelize.sync({
+    force: true
+}).then(() => {
+    console.log('Drop and Resync with { force: true }');
+    initial();
+});
 
 app.use(express.static(path.join(__dirname + '/public')));
 
+require('./app/router/router.js')(app);
 io.on('connection', socket => {
     console.log('Some client connected');
 
@@ -23,3 +36,15 @@ io.on('connection', socket => {
 });
 
 server.listen(PORT);
+
+function initial() {
+    Role.create({
+        id: 1,
+        name: "USER"
+    });
+
+    Role.create({
+        id: 2,
+        name: "ADMIN"
+    });
+}
