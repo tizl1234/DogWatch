@@ -7,9 +7,9 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 app.use(bodyParser.json());
-require('./app/router/router.js')(app);
+require('./router/router.js')(app);
 
-const db = require('./app/config/db.config.js');
+const db = require('./config/db.config.js');
 const Role = db.role;
 
 db.authenticate()
